@@ -4,11 +4,18 @@ Tool for downloading YouTube videos as either an mp4 or mp3 file with GUI
 
 Classes:
     Frame: GUI Window to run program in
+
+Globals:
+    FRAME_WIDTH: Constant that controls the frame's default width
+    FRAME_HEIGHT: Constant that controls the frame's default height
 """
 import os
 
 import wx
 from pytube import YouTube
+
+FRAME_WIDTH = 500
+FRAME_HEIGHT = 300
 
 
 class Frame(wx.Frame):
@@ -20,8 +27,8 @@ class Frame(wx.Frame):
     """
 
     def __init__(self):
-        FRAME_WIDTH = 500
-        FRAME_HEIGHT = 300
+        global FRAME_WIDTH
+        global FRAME_HEIGHT
         super().__init__(parent=None, title='YouTube Downloader', size=(FRAME_WIDTH, FRAME_HEIGHT))
         panel = wx.Panel(self, style=wx.SUNKEN_BORDER)
 
@@ -60,7 +67,6 @@ class Frame(wx.Frame):
         Returns:
             None
         """
-        global FRAME_WIDTH
         video = None
         if download_path == '':
             download_path = 'videos'
