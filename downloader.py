@@ -6,8 +6,9 @@ Classes:
     Frame: GUI Window to run program in
 
 Globals:
-    FRAME_WIDTH: Constant that controls the frame's default width
-    FRAME_HEIGHT: Constant that controls the frame's default height
+    FRAME_WIDTH (int): Constant that controls the frame's default width
+    FRAME_HEIGHT (int): Constant that controls the frame's default height
+    program_path (str): Path to the directory that the program is running
 """
 import os
 
@@ -16,6 +17,8 @@ from pytube import YouTube
 
 FRAME_WIDTH = 500
 FRAME_HEIGHT = 300
+
+program_path = os.getcwd()
 
 
 class Frame(wx.Frame):
@@ -68,15 +71,21 @@ class Frame(wx.Frame):
             None
         """
         video = None
+
+        os.chdir(program_path)
+
         if download_path == '':
             download_path = 'videos'
+
+        else:
+            os.chdir(os.path.expanduser('~'))
         try:
             video = YouTube(link)
 
         except ConnectionError:
             print('Connection Error')
 
-        if self.option_box.GetStringSelection() == 'mp4 (Audio and Video)':
+        if self.option_box.GetStringSelection() == 'mp3 (Audio Only)':
             download_video = video.streams.filter(only_audio=True).first()
         else:
             download_video = video.streams.filter(progressive=True, file_extension='mp4').first()
