@@ -1,12 +1,12 @@
-#coding=utf-8
+# coding=utf-8
 """Graphical User Interface"""
-import time
+import os
 
 import wx
 from pytube import YouTube
-import os
 
-def download_video(link, download_path = 'videos'):
+
+def download_video(link, download_path='videos'):
     try:
         video = YouTube(link)
 
@@ -35,6 +35,7 @@ def on_click(event, link, path):
     else:
         download_video(link, path)
 
+
 class Frame(wx.Frame):
     def __init__(self):
         super().__init__(parent=None, title='YouTube Downloader')
@@ -46,25 +47,25 @@ class Frame(wx.Frame):
         self.url = wx.TextCtrl(panel)
         main_sizer.Add(self.url, 0, wx.ALL | wx.EXPAND, 5)
 
-        self.download_path = wx.TextCtrl(panel, style=wx.TE_MULTILINE|wx.TE_NO_VSCROLL|wx.TE_CHARWRAP)
+        self.download_path = wx.TextCtrl(panel, style=wx.TE_MULTILINE | wx.TE_NO_VSCROLL | wx.TE_CHARWRAP)
         main_sizer.Add(self.download_path, 0, wx.ALL | wx.EXPAND, 5)
 
         self.download_btn = wx.Button(panel, label='Download')
-        self.download_btn.Bind(wx.EVT_BUTTON, lambda event: on_click(event, self.url.GetValue(), self.download_path.GetValue()))
+        self.download_btn.Bind(wx.EVT_BUTTON,
+                               lambda event: on_click(event, self.url.GetValue(), self.download_path.GetValue()))
         main_sizer.Add(self.download_btn, 0, wx.ALL | wx.EXPAND, 5)
 
         options = ['mp4 (Audio and Video)', 'mp3 (Audio Only)']
-        self.option_box = wx.RadioBox(panel, label='Download as:',choices=options,
-                                majorDimension=1, style=wx.RA_SPECIFY_ROWS)
+        self.option_box = wx.RadioBox(panel, label='Download as:', choices=options,
+                                      majorDimension=1, style=wx.RA_SPECIFY_ROWS)
         main_sizer.Add(self.option_box, 0, wx.ALL | wx.EXPAND, 5)
-
-
 
         self.download_display = wx.StaticText(panel)
         main_sizer.Add(self.download_display, 0, wx.ALL | wx.EXPAND, 5)
 
         panel.SetSizer(main_sizer)
         self.Show()
+
 
 if __name__ == '__main__':
     app = wx.App()
