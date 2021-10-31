@@ -1,0 +1,2 @@
+wxPython~=4.1.1
+git+https://github.com/pytube/pytube@f06e0710dcf5089e582487fee94f7bb0afbf7ba9#egg=pytube
